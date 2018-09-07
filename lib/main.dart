@@ -9,20 +9,28 @@ import 'view/MyDrawer.dart';
 void main() => runApp(new DriverClient());
 
 class DriverClient extends StatefulWidget {
+  
   @override
   State<StatefulWidget> createState() => new DriverState();
+
 }
 
 class DriverState extends State<DriverClient> {
   var _tabImageList;
-  var _pageList;
+  IndexedStack _pageList;
   int _currentIndex = 0;
+
   var _tabTitleList = ['首页', '福利', '电影', '动态'];
+ 
   final TextStyle tabTextNormalStyle =
       new TextStyle(color: const Color(0xff969696));
   final TextStyle tabTextSelectStyle =
       new TextStyle(color: const Color(0xff5cc97c));
 
+   void initState() { 
+     super.initState();
+   }
+   
   @override
   Widget build(BuildContext context) {
     initView();
@@ -131,8 +139,6 @@ class DriverState extends State<DriverClient> {
         ]
       ];
     }
-
-    if (_pageList == null) {
       _pageList = new IndexedStack(
         children: <Widget>[
           new HomePage(),
@@ -144,4 +150,3 @@ class DriverState extends State<DriverClient> {
       );
     }
   }
-}
