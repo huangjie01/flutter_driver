@@ -1,4 +1,5 @@
 import 'package:http/http.dart' as http;
+import 'dart:io';
 
 class HttpUtils {
   /*
@@ -16,8 +17,10 @@ class HttpUtils {
     }
     try {
       http.Response response = await http.get(url);
-      if (successCallback != null) {
+      if (response.statusCode == HttpStatus.ok && successCallback != null) {
         successCallback(response.body);
+      } else if (errorCallBack != null) {
+        errorCallBack();
       }
     } catch (e) {
       if (errorCallBack != null) {
@@ -33,8 +36,10 @@ class HttpUtils {
       Map<String, String> parmas) async {
     try {
       http.Response response = await http.post(url, body: parmas);
-      if (successCallBack != null) {
+      if (response.statusCode == HttpStatus.ok && successCallBack != null) {
         successCallBack(response.body);
+      } else if (errorCallBack != null) {
+        errorCallBack();
       }
     } catch (e) {
       if (errorCallBack != null) {

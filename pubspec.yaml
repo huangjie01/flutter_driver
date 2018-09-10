@@ -46,6 +46,14 @@ flutter:
   - images/movie_select.png
   - images/welfare_normal.png
   - images/welfare_select.png
+  - images/avatar.jpg
+  - images/set.png
+  - images/about.png
+  - images/skin.png
+  - images/next.png
+
+
+
 
 
   # An image asset can refer to one or more resolution-specific "variants", see

@@ -47,7 +47,7 @@ class MovieState extends State {
   buildItem(index) {
     List directors = _dataList[index]['directors'];
     List costList = _dataList[index]['casts'];
-    num star=_dataList[index]['rating']['average'];
+    num star = _dataList[index]['rating']['average'];
     String directorName;
     StringBuffer costStringBuffer = new StringBuffer();
     String costString;
@@ -64,17 +64,18 @@ class MovieState extends State {
       costString = costStringBuffer.toString();
       costString = costString.substring(0, costString.length - 1);
     }
+
     //类型
     List typeList = _dataList[index]['genres'];
     int typeLength = typeList.length;
-    StringBuffer typeBuffer=new StringBuffer();
+    StringBuffer typeBuffer = new StringBuffer();
     String type;
     for (int i = 0; i < typeLength; i++) {
-       typeBuffer.write(typeList[i]+'/');
+      typeBuffer.write(typeList[i] + '/');
     }
-    type=typeBuffer.toString();
-    type=type.substring(0,type.length-1);
-  
+    type = typeBuffer.toString();
+    type = type.substring(0, type.length - 1);
+
     return new Container(
       padding: const EdgeInsets.fromLTRB(8.0, 1.0, 8.0, 1.0),
       child: new Row(children: <Widget>[
@@ -149,7 +150,7 @@ class MovieState extends State {
         setState(() {
           _dataList = result;
         });
-        print(result);
+      //  print(result);
       }
     }, (error) {
       print(error);
