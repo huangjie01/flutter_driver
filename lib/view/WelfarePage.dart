@@ -54,9 +54,9 @@ class WelfarePageState extends State {
  */
   Widget buidlItem(index) {
     return new Container(
-      padding: const EdgeInsets.all(4.0),
+      padding: const EdgeInsets.fromLTRB(4.0,2.0,4.0,2.0),
       child: new Card(
-        elevation: 2.0,
+        elevation: 3.0,
         child: new Image.network(
           _dataList[index],
         ),
