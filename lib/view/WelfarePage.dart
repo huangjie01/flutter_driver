@@ -59,6 +59,8 @@ class WelfarePageState extends State {
         elevation: 3.0,
         child: new Image.network(
           _dataList[index],
+          height: 300.0,
+          fit: BoxFit.cover,
         ),
       ),
     );
