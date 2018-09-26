@@ -45,6 +45,7 @@ class MovieState extends State {
   }
 
   buildItem(index) {
+    
     List directors = _dataList[index]['directors'];
     List costList = _dataList[index]['casts'];
     num star = _dataList[index]['rating']['average'];
@@ -150,7 +151,7 @@ class MovieState extends State {
         setState(() {
           _dataList = result;
         });
-      //  print(result);
+        //  print(result);
       }
     }, (error) {
       print(error);

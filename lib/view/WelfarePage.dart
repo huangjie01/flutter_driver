@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:driver/api/HttpApi.dart';
 import 'package:driver/utils/HttpUtils.dart';
+import 'package:driver/view/WelfareDetailPage.dart';
 import 'dart:convert';
 import 'dart:async';
 
@@ -15,6 +17,9 @@ class WelfarePageState extends State {
   num _currentPage = 0;
   List _dataList = new List();
   ScrollController _scrollController = new ScrollController();
+  Map<String, WidgetBuilder> route = {
+    '/detail': (BuildContext context) => new WelfareDetailPage(),
+  };
 
   WelfarePageState() {
     _scrollController.addListener(() {
@@ -31,15 +36,16 @@ class WelfarePageState extends State {
   Widget build(BuildContext context) {
     if (_dataList == null || _dataList.length == 0) {
       return new Center(
-        child: new CircularProgressIndicator(),
+        child: new CupertinoActivityIndicator(),
       );
     } else {
-      Widget listView= new ListView.builder(
+      Widget listView = new ListView.builder(
         itemBuilder: (context, index) => buidlItem(index),
         itemCount: _dataList.length,
         controller: _scrollController,
       );
-      return new RefreshIndicator(child: listView,onRefresh: _refreshData);
+      
+      return new RefreshIndicator(child: listView, onRefresh: _refreshData);
     }
   }
 
@@ -54,22 +60,33 @@ class WelfarePageState extends State {
  */
   Widget buidlItem(index) {
     return new Container(
-      padding: const EdgeInsets.fromLTRB(4.0,2.0,4.0,2.0),
-      child: new Card(
-        elevation: 3.0,
-        child: new Image.network(
-          _dataList[index],
-          height: 300.0,
-          fit: BoxFit.cover,
+      padding: const EdgeInsets.fromLTRB(4.0, 2.0, 4.0, 2.0),
+      child: new GestureDetector(
+        child: new Card(
+          elevation: 3.0,
+          child: new Image.network(
+            _dataList[index],
+            height: 300.0,
+            fit: BoxFit.cover,
+          ),
         ),
+        onTap:()=> goWelfareDetail(index),
       ),
     );
   }
+  goWelfareDetail(index) {
+     
+    Navigator.of(context).push(new MaterialPageRoute<void>(
+      builder: (BuildContext context){
+         return new WelfareDetailPage(url:_dataList[index],dataList: _dataList,);
+      }
+    ));
+  }
 
-   /*
+  /*
     * 刷新数据
     */
-Future<Null> _refreshData() async{
+  Future<Null> _refreshData() async {
     loadData(false);
     return null;
   }
@@ -79,6 +96,7 @@ Future<Null> _refreshData() async{
  */
   loadData(bool loadMore) {
     String url = HttpApi.WelfareUrl + '/$_currentPage';
+    print('福利加载数据 $loadMore');
     HttpUtils.get(url, (data) {
       if (data != null) {
         Map<String, dynamic> resultMap = json.decode(data);

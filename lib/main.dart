@@ -43,6 +43,9 @@ class DriverState extends State<DriverClient> {
           title: new Text(_tabTitleList[_currentIndex],
               style: new TextStyle(color: Colors.white)),
           iconTheme: new IconThemeData(color: Colors.white),
+          actions: <Widget>[
+            new IconButton(icon:new Icon(Icons.search,color: Colors.white,))
+          ],
         ),
         body: _pageList,
         bottomNavigationBar: new CupertinoTabBar(

@@ -14,7 +14,7 @@ class HomePageState extends State{
     @override
     Widget build( BuildContext context){
         return new Center(
-          child:new Text("home")
+          child: new CircularProgressIndicator()
         );
     }
  }
