@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
 
 class WelfareDetailPage extends StatefulWidget {
   var url;
@@ -25,24 +26,44 @@ class WelfareDetailState extends State<WelfareDetailPage> {
                 style: new TextStyle(color: Colors.white),
               ),
             ),
-            body: listView = new ListView.builder(
-              scrollDirection: Axis.horizontal,
-              itemBuilder: (context, index) => buildItem(index),
+            body: new GestureDetector(
+              child: new Image.network(
+                url,
+                height: double.infinity,
+                fit: BoxFit.cover,
+              ),
+              onLongPress: () => showAction(),
             )));
   }
 
-  Widget buildItem(index) {
-    return new GestureDetector(
-      child: new Image.network(
-        dataList[index],
-        height: double.infinity,
-        fit: BoxFit.cover,
-      ),
-      onLongPress: () => showAction(index),
-    );
+  void showActionSheet<T>({BuildContext context, Widget child}) {
+    showCupertinoModalPopup<T>(
+      context: context,
+      builder: (BuildContext context) => child,
+    ).then<void>((T value) {});
   }
 
-  showAction(index) {
-    
+  showAction() {
+    showActionSheet<String>(
+      context: context,
+      child: new CupertinoActionSheet(
+          actions: <Widget>[
+            new CupertinoActionSheetAction(
+              child: const Text('下载'),
+              onPressed: () {},
+            ),
+            new CupertinoActionSheetAction(
+              child: const Text('保存到系统相册'),
+              onPressed: () {},
+            ),
+          ],
+          cancelButton: new CupertinoActionSheetAction(
+            child: const Text('Cancel'),
+            isDefaultAction: true,
+            onPressed: () {
+              Navigator.pop(context, 'Cancel');
+            },
+          )),
+    );
   }
 }

@@ -1,4 +1,4 @@
-#Tue Sep 11 21:12:58 CST 2018
+#Wed Sep 26 23:01:28 CST 2018
 base.0=/Users/huangjie/flutter_project/flutter_driver/build/app/intermediates/transforms/dexMerger/debug/0
 path.0=classes.dex
 renamed.0=classes.dex
