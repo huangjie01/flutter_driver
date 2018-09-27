@@ -11,7 +11,7 @@
 # 功能
 -  首页界面开发中，敬请期待
 -  福利界面支持下拉刷新或分页加载
--  福利图片预览界面开发中 ，敬请期待
+-  福利图片预览界面开发中
 -  电影界面支持下拉刷新
 -  电影详情界面开发中，敬请期待
 -  动态界面开发中，敬请期待
@@ -26,5 +26,6 @@
     <img src='screenshots/ios01.png' width=280>
     <img src='screenshots/ios02.png' width=280>
     <img src='screenshots/ios03.png' width=280>
+    <img src='screenshots/ios04.png' width=280>
 </div>
 
