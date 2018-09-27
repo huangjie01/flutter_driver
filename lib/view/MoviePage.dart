@@ -45,7 +45,6 @@ class MovieState extends State {
   }
 
   buildItem(index) {
-    
     List directors = _dataList[index]['directors'];
     List costList = _dataList[index]['casts'];
     num star = _dataList[index]['rating']['average'];
@@ -57,7 +56,7 @@ class MovieState extends State {
       directorName = directors[0]['name'];
     }
     //主演
-    int length = costList.length;
+    int length = costList.length <= 3 ? costList.length : 3;
     if (costList != null && length > 0) {
       for (int i = 0; i < length; i++) {
         costStringBuffer.write(costList[i]['name'] + '/');
@@ -77,64 +76,66 @@ class MovieState extends State {
     type = typeBuffer.toString();
     type = type.substring(0, type.length - 1);
 
-    return new Container(
-      padding: const EdgeInsets.fromLTRB(8.0, 1.0, 8.0, 1.0),
-      child: new Row(children: <Widget>[
-        new Image.network(
-          _dataList[index]['images']['small'],
-          width: 80.0,
-          height: 120.0,
-        ),
-        new Container(
-          margin: const EdgeInsets.fromLTRB(8.0, 0.0, 8.0, 0.0),
-          child: new Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                new Text(
-                  _dataList[index]['title'],
-                  textAlign: TextAlign.left,
-                ),
-                new Row(children: <Widget>[
-                  new Text(
-                    '导演:',
-                    textAlign: TextAlign.left,
-                  ),
-                  new Text(directorName)
-                ]),
-                new Row(children: <Widget>[
-                  new Text(
-                    '主演:',
-                    textAlign: TextAlign.left,
-                  ),
-                  new Text(
-                    costString,
-                    overflow: TextOverflow.ellipsis,
-                  )
-                ]),
-                new Row(children: <Widget>[
-                  new Text(
-                    '类型:',
-                    textAlign: TextAlign.left,
-                  ),
-                  new Text(
-                    type,
-                    overflow: TextOverflow.ellipsis,
-                  )
-                ]),
-                new Row(children: <Widget>[
-                  new Text(
-                    '评分:',
-                    textAlign: TextAlign.left,
-                  ),
-                  new Text(
-                    star.toString(),
-                    overflow: TextOverflow.ellipsis,
-                  )
-                ]),
-              ]),
-        )
-      ]),
-    );
+    return new SingleChildScrollView(
+        scrollDirection: Axis.horizontal,
+        child: new Container(
+          padding: const EdgeInsets.fromLTRB(8.0, 1.0, 8.0, 1.0),
+          child: new Row(children: <Widget>[
+            new Image.network(
+              _dataList[index]['images']['small'],
+              width: 80.0,
+              height: 120.0,
+            ),
+            new Container(
+              margin: const EdgeInsets.fromLTRB(8.0, 0.0, 8.0, 0.0),
+              child: new Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    new Text(
+                      _dataList[index]['title'],
+                      textAlign: TextAlign.left,
+                    ),
+                    new Row(children: <Widget>[
+                      new Text(
+                        '导演:',
+                        textAlign: TextAlign.left,
+                      ),
+                      new Text(directorName)
+                    ]),
+                    new Row(children: <Widget>[
+                      new Text(
+                        '主演:',
+                        textAlign: TextAlign.left,
+                      ),
+                      new Text(
+                        costString,
+                        overflow: TextOverflow.ellipsis,
+                      )
+                    ]),
+                    new Row(children: <Widget>[
+                      new Text(
+                        '类型:',
+                        textAlign: TextAlign.left,
+                      ),
+                      new Text(
+                        type,
+                        overflow: TextOverflow.ellipsis,
+                      )
+                    ]),
+                    new Row(children: <Widget>[
+                      new Text(
+                        '评分:',
+                        textAlign: TextAlign.left,
+                      ),
+                      new Text(
+                        star.toString(),
+                        overflow: TextOverflow.ellipsis,
+                      )
+                    ]),
+                  ]),
+            )
+          ]),
+        ));
   }
 
 /*
