@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'dart:async';
 import 'package:driver/api/HttpApi.dart';
 import 'package:driver/utils/HttpUtils.dart';
+import 'package:driver/view/MovieDetailPage.dart';
+import 'package:driver/model/LastedMovieModel.dart';
+import 'package:driver/model/MovieModel.dart';
 import 'dart:convert';
 import 'dart:async';
 
@@ -13,7 +16,7 @@ class MoviePage extends StatefulWidget {
 }
 
 class MovieState extends State {
-  var _dataList = new List();
+  List<MovieModel> _dataList;
 
   @override
   void initState() {
@@ -45,44 +48,45 @@ class MovieState extends State {
   }
 
   buildItem(index) {
-    List directors = _dataList[index]['directors'];
-    List costList = _dataList[index]['casts'];
-    num star = _dataList[index]['rating']['average'];
     String directorName;
     StringBuffer costStringBuffer = new StringBuffer();
     String costString;
+
     //导演
-    if (directors != null && directors.length > 0) {
-      directorName = directors[0]['name'];
+    if (_dataList[index].directors!= null && _dataList[index].directors.length > 0) {
+      directorName = _dataList[index].directors[0].name;
     }
+
     //主演
-    int length = costList.length <= 3 ? costList.length : 3;
-    if (costList != null && length > 0) {
+    int length = _dataList[index].casts.length;
+    if (length > 0) {
       for (int i = 0; i < length; i++) {
-        costStringBuffer.write(costList[i]['name'] + '/');
+        costStringBuffer.write(_dataList[index].casts[i].name + '/');
       }
       costString = costStringBuffer.toString();
       costString = costString.substring(0, costString.length - 1);
     }
-
     //类型
-    List typeList = _dataList[index]['genres'];
+    List typeList = _dataList[index].type;
     int typeLength = typeList.length;
     StringBuffer typeBuffer = new StringBuffer();
     String type;
+
     for (int i = 0; i < typeLength; i++) {
       typeBuffer.write(typeList[i] + '/');
     }
+
     type = typeBuffer.toString();
     type = type.substring(0, type.length - 1);
 
-    return new SingleChildScrollView(
+    return new GestureDetector(
+      child: new SingleChildScrollView(
         scrollDirection: Axis.horizontal,
         child: new Container(
           padding: const EdgeInsets.fromLTRB(8.0, 1.0, 8.0, 1.0),
           child: new Row(children: <Widget>[
             new Image.network(
-              _dataList[index]['images']['small'],
+              _dataList[index].images.small,
               width: 80.0,
               height: 120.0,
             ),
@@ -92,7 +96,7 @@ class MovieState extends State {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
                     new Text(
-                      _dataList[index]['title'],
+                      _dataList[index].name,
                       textAlign: TextAlign.left,
                     ),
                     new Row(children: <Widget>[
@@ -128,14 +132,24 @@ class MovieState extends State {
                         textAlign: TextAlign.left,
                       ),
                       new Text(
-                        star.toString(),
+                        _dataList[index].rating.average.toString(),
                         overflow: TextOverflow.ellipsis,
                       )
                     ]),
                   ]),
             )
           ]),
-        ));
+        )),
+        onTap: ()=>goMovieDetal(index),
+        );
+  }
+
+  void  goMovieDetal(index){
+       Navigator.of(context).push(new MaterialPageRoute(
+         builder: ( BuildContext context){
+           return new MovieDetailPage(movie:_dataList[index]);
+         },
+       ));
   }
 
 /*
@@ -146,13 +160,13 @@ class MovieState extends State {
     String url = HttpApi.movieUrl;
     HttpUtils.get(url, (data) {
       if (data != null) {
-        Map<String, dynamic> resultMap = json.decode(data);
-        //print(resultMap);
-        List result = resultMap['subjects'];
+         LastedMovieModel lastedMovieModel=new LastedMovieModel(data);
+        print(lastedMovieModel);
+        List result = lastedMovieModel.movieModelList;
         setState(() {
           _dataList = result;
         });
-        //  print(result);
+       // print(result);
       }
     }, (error) {
       print(error);

@@ -79,7 +79,7 @@ class DriverState extends State<DriverClient> {
     );
   }
 
-  /**
+  /*
   * 根据路径返回tab 指示器图标
   */
   Image getTabImage(path) {
